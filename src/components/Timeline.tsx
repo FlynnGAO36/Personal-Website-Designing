@@ -21,7 +21,7 @@ const timelineData = [
 export function Timeline() {
   return (
     
-    <div className="py-20 bg-slate-50/50 border-4 border-red-500">
+    <div className="py-20 bg-slate-50/50">
       <div className="max-w-3xl mx-auto px-6">
         <h2 className="text-3xl font-bold mb-12 text-center text-slate-800">Study in Melbourne</h2>
         <div className="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-slate-300 before:to-transparent">
