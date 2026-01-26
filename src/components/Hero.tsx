@@ -1,4 +1,4 @@
-import { Badge } from "@/src/components/ui/badge"
+import { Badge } from "@/components/ui/badge"
 
 export function Hero() {
   const skills = ["Python", "C", "Java", "SQL", "JS", "TS", "Next.js"];

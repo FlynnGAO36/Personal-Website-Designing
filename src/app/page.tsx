@@ -1,11 +1,10 @@
-import { Hero } from "@/src/components/Hero"
-import { Timeline } from "@/src/components/Timeline"
+import { Hero } from "@/components/Hero"
+import { Timeline } from "@/components/Timeline"
 
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-white flex flex-col">
       {/* Hero 区域 */}
-      <h1>增加测试增加测试</h1>
       <Hero />
       
       <hr className="border-slate-100" /> {/* 加一条若隐若现的分隔线 */}

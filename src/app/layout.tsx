@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Navbar from "@/src/components/Navbar";
-import Footer from "@/src/components/Footer";
-import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import "@/app/globals.css";
 
 // 这部分决定了你浏览器标签栏显示的文字
 export const metadata: Metadata = {
