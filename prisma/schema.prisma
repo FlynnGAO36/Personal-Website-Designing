@@ -1,14 +1,18 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model Post {
+  id          String   @id @default(cuid()) // 自动生成唯一的 ID
+  title       String
+  slug        String   @unique             // 比如 "my-first-day-in-unimelb"，唯一标识
+  content     String   @db.Text            // 存储文章内容
+  excerpt     String                       // 摘要
+  category    String                       // 分类
+  published   Boolean  @default(false)     // 默认先不发布
+  createdAt   DateTime @default(now())
 }
