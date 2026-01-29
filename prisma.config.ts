@@ -3,12 +3,13 @@ import { defineConfig } from "@prisma/config";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
-  migrations: {
-    path: "prisma/migrations",
-    // ⬇️ 就是加下面这一行，告诉 Prisma 种子脚本的位置
-    seed: "tsx prisma/seed.ts", 
-  },
+  // 这里的 datasource 是给终端命令（CLI）用的
   datasource: {
     url: process.env.DATABASE_URL, 
+  },
+  // 你之前的 seed 和 migrations 配置可以保留，没有冲突
+  migrations: {
+    path: "prisma/migrations",
+    seed: "tsx prisma/seed.ts", 
   },
 });
