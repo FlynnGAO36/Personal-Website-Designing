@@ -29,7 +29,7 @@ export default async function HomePage() {
   // 如果这里 prisma 下方有红线，请确保你创建了 src/lib/prisma.ts 文件
   const posts = await prisma.post.findMany({
     orderBy: { createdAt: 'desc' },
-    take: 3 
+    take: 4 
   });
 
   return (
