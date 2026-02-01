@@ -7,6 +7,24 @@ async function main() {
 
   const posts = [
     {
+      id: 'post_001', // 沿用你 SQL 里的 ID
+      title: '墨大 COMP10001 选课指南',
+      slug: 'unimelb-comp10001-guide',
+      excerpt: '作为墨大 CS 的敲门砖，这门课到底在学什么？',
+      content: '这里是关于 COMP10001 的详细内容：Python 基础、算法思维，以及如何拿到 H1。',
+      category: 'Study Tips',
+      published: true,
+    },
+    {
+      id: 'post_002', // 沿用你 SQL 里的 ID
+      title: '墨尔本 City 宝藏咖啡馆推荐',
+      slug: 'melbourne-coffee-spots',
+      excerpt: '除了 Seven Seeds，墨尔本还有哪些值得一去的咖啡店？',
+      content: '墨尔本是咖啡之都。推荐 Brother Baba Budan 的天花板，以及 Industry Beans 的手冲。',
+      category: 'Melbourne Life',
+      published: true,
+    },
+    {
       id: '1',
       title: '墨尔本最好吃的炸鱼薯条店清单',
       slug: 'best-fish-and-chips-melbourne',
@@ -29,13 +47,20 @@ async function main() {
   for (const post of posts) {
     const upsertedPost = await prisma.post.upsert({
       where: { slug: post.slug },
-      update: {}, // 如果已存在则不更新
+      update: {
+        // 如果数据已存在，确保内容是最新的
+        title: post.title,
+        excerpt: post.excerpt,
+        content: post.content,
+        category: post.category,
+        published: post.published,
+      },
       create: post,
     })
-    console.log(`已创建/跳过文章: ${upsertedPost.title}`)
+    console.log(`已同步文章: ${upsertedPost.title}`)
   }
 
-  console.log('数据填充完成！')
+  console.log('所有 4 篇数据同步完成！')
 }
 
 main()
