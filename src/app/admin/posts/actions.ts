@@ -61,3 +61,36 @@ export async function deletePost(id: string) {
     return { success: false, error: "删除失败，请稍后再试" };
   }
 }
+
+/**
+ * 更新文章
+ */
+export async function updatePost(id: string, formData: FormData) {
+  try {
+    const title = formData.get("title") as string;
+    const slug = formData.get("slug") as string;
+    const excerpt = formData.get("excerpt") as string;
+    const category = formData.get("category") as string;
+    const content = formData.get("content") as string;
+
+    await prisma.post.update({
+      where: { id },
+      data: {
+        title,
+        slug,
+        excerpt,
+        category,
+        content,
+      },
+    });
+
+    revalidatePath("/blog");
+    revalidatePath("/admin/posts");
+    
+    // 更新完后跳回列表页
+    redirect("/admin/posts");
+  } catch (error) {
+    console.error("Update Action Error:", error);
+    return { success: false, error: "更新失败" };
+  }
+}

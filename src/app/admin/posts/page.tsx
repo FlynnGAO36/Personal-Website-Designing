@@ -39,7 +39,11 @@ export default async function AdminPostsPage() {
                 <TableCell><Badge variant="outline">{post.category}</Badge></TableCell>
                 <TableCell>{new Date(post.createdAt).toLocaleDateString()}</TableCell>
                 <TableCell className="text-right space-x-2">
-                  <Button variant="outline" size="icon"><Pencil className="h-4 w-4" /></Button>
+                  <Link href={`/admin/posts/${post.id}/edit`}>
+                    <Button variant="outline" size="icon">
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                  </Link>
                   <DeleteButton id={post.id} />
                 </TableCell>
               </TableRow>
