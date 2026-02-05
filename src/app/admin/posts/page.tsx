@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { PlusCircle, Pencil, Trash2 } from "lucide-react";
+import { DeleteButton } from "./_components/DeleteButton";
 
 export default async function AdminPostsPage() {
   // 2. 从数据库读取真实数据
@@ -39,7 +40,7 @@ export default async function AdminPostsPage() {
                 <TableCell>{new Date(post.createdAt).toLocaleDateString()}</TableCell>
                 <TableCell className="text-right space-x-2">
                   <Button variant="outline" size="icon"><Pencil className="h-4 w-4" /></Button>
-                  <Button variant="destructive" size="icon"><Trash2 className="h-4 w-4" /></Button>
+                  <DeleteButton id={post.id} />
                 </TableCell>
               </TableRow>
             ))}

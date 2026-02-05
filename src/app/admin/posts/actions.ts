@@ -43,11 +43,21 @@ export async function createPost(formData: FormData) {
  * @param id 文章的唯一 ID
  */
 export async function deletePost(id: string) {
-  await prisma.post.delete({
-    where: { id },
-  });
+  try {
+    // 1. 执行数据库删除操作
+    await prisma.post.delete({
+      where: { id },
+    });
 
-  // 同样需要刷新路径，否则用户看到的列表里文章还没消失
-  revalidatePath("/blog");
-  revalidatePath("/admin/posts");
+    // 2. 核心步骤：清除缓存，确保用户看到的列表是最新的
+    revalidatePath("/blog");
+    revalidatePath("/admin/posts");
+
+    // 3. 返回成功标志，让前端组件可以做后续处理（如关闭 loading）
+    return { success: true };
+  } catch (error) {
+    // 4. 如果删除失败（比如数据库连接断开），在后台打印错误，并告知前端
+    console.error("Delete Action Error:", error);
+    return { success: false, error: "删除失败，请稍后再试" };
+  }
 }
