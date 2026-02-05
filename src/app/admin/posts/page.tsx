@@ -1,32 +1,22 @@
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+import { prisma } from "@/lib/prisma"; // 1. 引入 prisma
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 import { PlusCircle, Pencil, Trash2 } from "lucide-react";
 
-// 模拟数据 (明天我们会换成真正的数据库查询)
-const mockPosts = [
-  { id: "1", title: "我的第一篇博客", status: "Published", date: "2024-03-20" },
-  { id: "2", title: "Next.js 14 实战指南", status: "Draft", date: "2024-03-21" },
-];
+export default async function AdminPostsPage() {
+  // 2. 从数据库读取真实数据
+  const posts = await prisma.post.findMany({
+    orderBy: { createdAt: "desc" }, // 按时间倒序，最新的在上面
+  });
 
-export default function AdminPostsPage() {
   return (
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">文章管理</h1>
         <Link href="/admin/posts/new">
-          <Button>
-            <PlusCircle className="mr-2 h-4 w-4" /> 新建文章
-          </Button>
+          <Button><PlusCircle className="mr-2 h-4 w-4" /> 新建文章</Button>
         </Link>
       </div>
 
@@ -35,28 +25,21 @@ export default function AdminPostsPage() {
           <TableHeader>
             <TableRow>
               <TableHead>标题</TableHead>
-              <TableHead>状态</TableHead>
-              <TableHead>发布日期</TableHead>
+              <TableHead>分类</TableHead>
+              <TableHead>日期</TableHead>
               <TableHead className="text-right">操作</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {mockPosts.map((post) => (
+            {/* 3. 循环渲染真实数据 */}
+            {posts.map((post) => (
               <TableRow key={post.id}>
                 <TableCell className="font-medium">{post.title}</TableCell>
-                <TableCell>
-                  <Badge variant={post.status === "Published" ? "default" : "secondary"}>
-                    {post.status}
-                  </Badge>
-                </TableCell>
-                <TableCell>{post.date}</TableCell>
+                <TableCell><Badge variant="outline">{post.category}</Badge></TableCell>
+                <TableCell>{new Date(post.createdAt).toLocaleDateString()}</TableCell>
                 <TableCell className="text-right space-x-2">
-                  <Button variant="outline" size="icon">
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                  <Button variant="destructive" size="icon">
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                  <Button variant="outline" size="icon"><Pencil className="h-4 w-4" /></Button>
+                  <Button variant="destructive" size="icon"><Trash2 className="h-4 w-4" /></Button>
                 </TableCell>
               </TableRow>
             ))}

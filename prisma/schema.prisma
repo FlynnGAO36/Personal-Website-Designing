@@ -8,12 +8,13 @@ generator client {
 }
 
 model Post {
-  id        String   @id
+  id        String   @id @default(cuid()) // 自动生成 ID
   title     String
   slug      String   @unique
-  excerpt   String
-  content   String
+  excerpt   String   // 对应列表页的简述
+  content   String   @db.Text // 使用 Text 类型存储长文本
   category  String
   published Boolean  @default(false)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt // 自动记录修改时间
 }
