@@ -6,6 +6,7 @@ import Link from "next/link";
 import { PlusCircle, Pencil, Trash2 } from "lucide-react";
 import { DeleteButton } from "./_components/DeleteButton";
 
+export const dynamic = "force-dynamic";
 export default async function AdminPostsPage() {
   // 2. 从数据库读取真实数据
   const posts = await prisma.post.findMany({
