@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { notFound } from "next/navigation";
-import ReactMarkdown from "react-markdown";
+// 1. 删掉这一行，因为我们不再需要解析 Markdown
+// import ReactMarkdown from "react-markdown"; 
 import { Calendar, Tag, ChevronLeft } from "lucide-react";
 import Link from "next/link";
 
@@ -9,15 +10,12 @@ export default async function PostDetailPage({
 }: { 
   params: Promise<{ slug: string }> 
 }) {
-  // 1. 获取 URL 中的 slug
   const { slug } = await params;
 
-  // 2. 去数据库找对应 slug 的文章
   const post = await prisma.post.findUnique({
     where: { slug },
   });
 
-  // 3. 没找到就报 404
   if (!post) notFound();
 
   return (
@@ -44,10 +42,12 @@ export default async function PostDetailPage({
 
       <hr className="my-8 border-zinc-200 dark:border-zinc-800" />
 
-      {/* 4. 关键：渲染正文。prose 类会让 Markdown 变得非常精美 */}
-      <div className="prose prose-stone lg:prose-xl max-w-none dark:prose-invert">
-        <ReactMarkdown>{post.content}</ReactMarkdown>
-      </div>
+      {/* 2. 修改这里：使用 dangerouslySetInnerHTML 来渲染编辑器生成的 HTML */}
+      {/* 注意：prose 类名依然保留，它负责给这些 HTML 标签添加漂亮的样式 */}
+      <div 
+        className="prose prose-stone lg:prose-xl max-w-none dark:prose-invert"
+        dangerouslySetInnerHTML={{ __html: post.content }} 
+      />
     </article>
   );
 }
