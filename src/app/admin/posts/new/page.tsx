@@ -4,14 +4,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createPost } from "../actions"; 
-// 1. 引入 dynamic 工具
-import dynamic from "next/dynamic";
 
-// 2. 使用 dynamic 导入组件，并关闭服务端渲染 (ssr: false)
-// 这样可以彻底解决 Tiptap 的 Hydration 报错问题
-const RichTextEditor = dynamic(() => import("../_components/RichTextEditor"), { 
+// 1. 将导入的 dynamic 重命名为 dynamicImport，避免和 Next.js 的配置项重名
+import dynamicImport from "next/dynamic";
+
+// 2. 只有在 Server Component 报错时才需要这行。
+// 但因为这里是 "use client"，这行通常可以不加。
+// 如果你想加，就必须像这样 export，且名字不能和上面的 import 冲突。
+export const dynamic = "force-dynamic";
+
+// 3. 使用重命名后的 dynamicImport 导入编辑器
+const RichTextEditor = dynamicImport(() => import("../_components/RichTextEditor"), { 
   ssr: false,
-  // 可选：添加一个加载时的占位状态，让 UI 更平滑
   loading: () => <div className="h-[400px] w-full bg-zinc-50 dark:bg-zinc-800/50 animate-pulse rounded-lg border border-zinc-200 dark:border-zinc-800" />
 });
 
@@ -21,7 +25,6 @@ export default function NewPostPage() {
       <h1 className="text-3xl font-bold mb-8">撰写新文章</h1>
       
       <form action={createPost} className="space-y-6">
-        
         <div className="space-y-2">
           <label className="text-sm font-medium">文章标题</label>
           <Input name="title" required placeholder="输入一个吸引人的标题..." />
@@ -45,7 +48,7 @@ export default function NewPostPage() {
 
         <div className="space-y-2">
           <label className="text-sm font-medium">内容 (Rich Text)</label>
-          {/* 3. 这里的用法保持不变 */}
+          {/* 这里依然使用组件名 RichTextEditor */}
           <RichTextEditor />
         </div>
 

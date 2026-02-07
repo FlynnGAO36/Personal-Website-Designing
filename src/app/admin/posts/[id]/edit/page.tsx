@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { updatePost } from "../../actions";
 import EditPostForm from "../../_components/EditPostForm"; // 引入刚才创建的表单
 
+export const dynamic = "force-dynamic"; // <--- 强制该页面为动态渲染
+
 export default async function EditPostPage({ 
   params 
 }: { 
