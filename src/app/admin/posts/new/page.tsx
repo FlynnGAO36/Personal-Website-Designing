@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { createPost } from "../actions"; 
-
+import { useRouter } from "next/navigation";
 // 1. 将导入的 dynamic 重命名为 dynamicImport，避免和 Next.js 的配置项重名
 import dynamicImport from "next/dynamic";
 
@@ -20,6 +20,9 @@ const RichTextEditor = dynamicImport(() => import("../_components/RichTextEditor
 });
 
 export default function NewPostPage() {
+
+  const router = useRouter();
+
   return (
     <div className="p-8 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-8">撰写新文章</h1>
@@ -53,8 +56,15 @@ export default function NewPostPage() {
         </div>
 
         <div className="flex justify-end space-x-4">
-          <Button variant="outline" type="button">取消</Button>
-          <Button type="submit">保存并发布</Button>
+          <Button 
+            variant="outline" 
+            type="button" 
+            onClick={() => router.push("/admin")}
+            className="cursor-pointer">
+            取消
+          </Button>
+
+          <Button type="submit" className="cursor-pointer">保存并发布</Button>
         </div>
       </form>
     </div>

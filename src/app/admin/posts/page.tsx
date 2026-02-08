@@ -41,7 +41,7 @@ export default async function AdminPostsPage() {
                 <TableCell>{new Date(post.createdAt).toLocaleDateString()}</TableCell>
                 <TableCell className="text-right space-x-2">
                   <Link href={`/admin/posts/${post.id}/edit`}>
-                    <Button variant="outline" size="icon">
+                    <Button variant="outline" size="icon" className="cursor-pointer">
                       <Pencil className="h-4 w-4" />
                     </Button>
                   </Link>

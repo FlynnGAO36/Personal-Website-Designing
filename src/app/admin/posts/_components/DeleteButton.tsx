@@ -24,6 +24,7 @@ export function DeleteButton({ id }: { id: string }) {
 
   return (
     <Button
+      className="cursor-pointer"
       variant="destructive"
       size="icon"
       onClick={handleDelete}

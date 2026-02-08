@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation"; // 1. 引入路由钩子
 
 // 在这里安全地使用 dynamic ssr: false
 const RichTextEditor = dynamic(() => import("./RichTextEditor"), { 
@@ -17,6 +18,8 @@ interface EditPostFormProps {
 }
 
 export default function EditPostForm({ post, handleUpdate }: EditPostFormProps) {
+  const router = useRouter(); // 2. 初始化路由
+
   return (
     <form action={handleUpdate} className="space-y-6">
       <div className="space-y-2">
@@ -46,8 +49,24 @@ export default function EditPostForm({ post, handleUpdate }: EditPostFormProps) 
       </div>
 
       <div className="flex justify-end space-x-4">
-        <Button variant="outline" type="button">取消</Button>
-        <Button type="submit">保存修改</Button>
+        {/* 3. 修改取消按钮：添加跳转逻辑和鼠标手势 */}
+        <Button 
+          variant="outline" 
+          type="button" 
+          onClick={() => router.push("/admin/posts")}
+          className="cursor-pointer"
+        >
+          取消
+        </Button>
+
+        {/* 4. 修改保存按钮：添加鼠标手势 */}
+        <Button 
+          type="submit" 
+          className="cursor-pointer"
+          onClick={() => router.push("/admin/posts")}
+        >
+          保存修改
+        </Button>
       </div>
     </form>
   );
