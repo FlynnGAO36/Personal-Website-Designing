@@ -33,6 +33,8 @@ const categoryStyles: Record<string, string> = {
   "Melbourne Life": "bg-blue-100 text-blue-700",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   // 2. 读取数据库中的文章数据
   // 如果这里 prisma 下方有红线，请确保你创建了 src/lib/prisma.ts 文件
