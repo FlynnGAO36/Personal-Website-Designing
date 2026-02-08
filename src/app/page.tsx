@@ -21,7 +21,6 @@ const projects = [
     title: "Personal Portfolio Website",
     description: "The very site you are seeing now! Built with Next.js 15, Tailwind CSS v4, and Shadcn UI.",
     tags: ["Next.js", "React", "TypeScript", "Tailwind"],
-    github: "https://github.com/your-username/unimelb-blog"
   }
 ];
 
