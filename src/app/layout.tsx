@@ -15,14 +15,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       {/* className 里的 antialiased 是让字体显示更平滑 testing */}
-      <body className="min-h-screen flex flex-col antialiased">
+      <body className="min-h-screen flex flex-col antialiased bg-slate-950">
         <Navbar />
         {/* flex-1 确保了内容不够多时，Footer 也会固定在页面底部 */}
-        <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8">
+        <div className="flex-1">
           {children}
-        </main>
+        </div>
         <Footer />
       </body>
     </html>
